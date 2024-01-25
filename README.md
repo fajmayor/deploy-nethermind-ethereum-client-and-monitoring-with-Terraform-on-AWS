@@ -1,5 +1,5 @@
 # Nethermind Ethereum Client and Monitoring Stacks Deployment using Terraform on AWS
-A quick and straightforward guide to swiftly deploy the Nethermind Client and Monitoring stack (consisting of Grafana, Prometheus, and Seq) using Terraform on AWS cloud.
+A quick and straightforward guide to swiftly deploy the Nethermind Client and Monitoring stack (consisting of Grafana, Prometheus, and Seq) using Terraform on AWS.
 
 Majority of the contents in this repository are from [NethermindET](https://github.com/NethermindEth/terraform-nethermind) and [Nethermind Doc](https://docs.nethermind.io)
 
@@ -8,6 +8,23 @@ I cloned [NethermindET](https://github.com/NethermindEth/terraform-nethermind) t
 
 ```
 git clone https://github.com/NethermindEth/terraform-nethermind
+```
+```
+resource "tls_private_key" "nethermind_pk" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "aws_key_pair" "nethermind_kp" {
+  key_name   = "key-pair-nethermind"       # Create a "myKey" to AWS!!
+  public_key = tls_private_key.nethermind_pk.public_key_openssh
+}
+
+resource "local_file" "ssh_key" {
+  filename = "${aws_key_pair.nethermind_kp.key_name}.pem"
+  content =  tls_private_key.nethermind_pk.private_key_pem
+  file_permission = "400"
+}
 ```
 ## Step 2: 
 I added the `providers.tf` file to the base directory. The configured aws provider is to establish a secure connection between terraform and aws
@@ -25,6 +42,8 @@ provider "aws" {
   }
 }
 ```
+![Alt text](images/terraform-init.png)
+
 ## Step 3: 
 I setup `backend.tf` to store the terraform state file in s3 and lock with dynamodb
 ```
