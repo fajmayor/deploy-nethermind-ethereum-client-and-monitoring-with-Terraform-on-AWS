@@ -1,21 +1,3 @@
-/* # create security group for the ec2 instance connect endpoint
-resource "aws_security_group" "eice_security_group" {
-  name        = "eic-endpoint-sg"
-  description = "enable outbound traffic on port 22 from the vpc cidr"
-  vpc_id      = aws_vpc.vpc.id
-
-  egress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = [var.vpc_cidr]
-  }
-
-  tags = {
-    Name = "${var.project_name}-${var.environment}-eic-endpoint-sg"
-  }
-} */
-
 # create security group for the app server
 resource "aws_security_group" "app_server_security_group" {
   name        = "Webserver-sg"

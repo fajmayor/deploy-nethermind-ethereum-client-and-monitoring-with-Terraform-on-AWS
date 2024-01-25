@@ -25,33 +25,6 @@ variable "public_subnet_az1_cidr" {
   type        = string
 }
 
-variable "public_subnet_az2_cidr" {
-  description = "public subnet az2 block"
-  type        = string
-}
-
-variable "private_app_subnet_az1_cidr" {
-  description = "private app subnet az1 block"
-  type        = string
-}
-
-variable "private_app_subnet_az2_cidr" {
-  description = "private app subnet az2 block"
-  type        = string
-}
-
-variable "private_data_subnet_az1_cidr" {
-  description = "private data subnet az1 block"
-  type        = string
-}
-
-variable "private_data_subnet_az2_cidr" {
-  description = "private data subnet az2 block"
-  type        = string
-}
-
-
-
 variable "ami_id" {
   description = "The ID of the AMI to use for the EC2 instance"
   type        = string
