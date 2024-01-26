@@ -55,11 +55,6 @@ variable "min_size" {
   type        = number
 }
 
-variable "launch_template_name" {
-  description = "Name of the launch template used to provision ec2"
-  type        = string
-}
-
 variable "config" {
   description = "Chain on which Nethermind will be running"
   type = string

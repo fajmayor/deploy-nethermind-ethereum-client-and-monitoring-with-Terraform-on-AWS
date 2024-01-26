@@ -3,7 +3,7 @@ A quick and straightforward guide to swiftly deploy the Nethermind Client and Mo
 
 Majority of the contents in this repository are from [NethermindET](https://github.com/NethermindEth/terraform-nethermind) and [Nethermind Doc](https://docs.nethermind.io)
 
-## Step 1: 
+## Step 1: Cloning Repository
 I cloned [NethermindET](https://github.com/NethermindEth/terraform-nethermind) to my localhost and edited the main.tf to conform with AWS terraform resources.
 
 ```
@@ -26,7 +26,7 @@ resource "local_file" "ssh_key" {
   file_permission = "400"
 }
 ```
-## Step 2: 
+## Step 2: Provisioner Block
 I added the `providers.tf` file to the base directory. The configured aws provider is to establish a secure connection between terraform and aws
 ```
 provider "aws" {
@@ -44,7 +44,7 @@ provider "aws" {
 ```
 ![Alt text](images/terraform-init.png)
 
-## Step 3: 
+## Step 3: Backend Block
 I setup `backend.tf` to store the terraform state file in s3 and lock with dynamodb
 ```
 terraform {
@@ -75,4 +75,30 @@ resource "aws_vpc" "vpc" {
   }
 }
 ```
+## Step 3: Terraform Init/Plan/Apply
 
+After a series of debugging and editing the Terraform scripts, I ran `terraform init`, `terraform plan`, and `terraform apply`. Everything applied successfully.
+
+* **Terraform scripts run successfully**
+![Alt text](<images/terraform apply.png>)
+
+* **Nethermind Ethereum server deployed**
+  ![Alt text](images/server-running.png)
+
+* **Grafana UI** (http://34.207.55.36:3000/)
+  ![Alt text](images/grafana-1.png)
+  ![Alt text](images/grafana.png)
+
+* **Prometheus UI** (http://34.207.55.36:9090)
+  ![Alt text](images/prometheus-ui.png)
+
+* **Pushgateway UI** (http://34.207.55.36:9091)
+  ![Alt text](images/push-gateway.png)
+
+* **Seq UI** (http://34.207.55.36:5341)
+  ![Alt text](images/seq.png)
+
+## References
+* https://docs.nethermind.io/get-started/installing-nethermind
+* https://medium.com/nethermind-eth/deploying-nethermind-ethereum-client-with-monitoring-stack-55ce1622edbd
+* https://github.com/NethermindEth/terraform-nethermind
